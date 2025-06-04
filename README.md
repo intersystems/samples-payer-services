@@ -1,4 +1,3 @@
-# PayerServices-DTR
-Documentation Templates and Rules
+# Payer_Services
 
-Sample config.json and CPF merge files for the InterSystems Payer Services DTR product. 
+Sample config.json and CPF merge files for the InterSystems Payer Services products. 
