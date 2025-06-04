@@ -1,0 +1,97 @@
+{
+    "intersystems_payer_services_hp_crd": {
+        "interopCredentials": [],
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest",
+                "description": "For contacting OAuth server for CRD",
+                "verifyPeer": false,
+                "privateKeyType": "RSA",
+                "tlsMaxVersion": "TLSv1.3",
+                "tlsMinVersion": "TLSv1.2",
+                "ocsp": false
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "UMProxy",
+                "host": "crd.davinci.hl7.org",
+                "port": 443,
+                "url": "r4",
+                "sslConfig": "ISC.FeatureTracker.SSL.Config",
+                "authType": "none"
+            }
+        ],
+        "oAuthServerConfigs": [],
+        "productionSettings": {
+            "productionName": "HS.HP.CRD.Local.Production",
+            "settings": [],
+            "items": [
+                {
+                    "name": "r4",
+                    "settings": [
+                        {
+                            "settingName": "ContextSchemaPackage",
+                            "settingValue": "davinci-crd-context@2.0.1",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "AllowUnrecognizedContextFields",
+                            "settingValue": "1",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SSLConfig",
+                            "settingValue": "ISC.FeatureTracker.SSL.ConfigTest",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "AllowTokenReuse",
+                            "settingValue": "1",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "DisableAllTokenValidation",
+                            "settingValue": "0",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "DisableTokenSigValidation",
+                            "settingValue": "0",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "UMProxy",
+                    "commentOrClassname": "HS.HP.CRD.Interop.UMProxy",
+                    "settings": [
+                        {
+                            "settingName": "UseMockUp",
+                            "settingValue": "0",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "OAuth2Scope",
+                            "settingValue": "user/cds_hooks.write user/test.write",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        },
+        "allowLists": {
+            "issuer": [
+                "https://inferno.healthit.gov/suites/custom/crd_server",
+                "https://inferno-qa.healthit.gov/suites/custom/crd_server",
+                "<OAuth server URL>"
+            ],
+            "jku": [
+                "https://inferno.healthit.gov/suites/custom/crd_server/jwks.json",
+                "https://inferno-qa.healthit.gov/suites/custom/crd_server/jwks.json",
+                "<OAuth public key URL>"
+            ],
+            "origin": []
+        }
+    }
+}
