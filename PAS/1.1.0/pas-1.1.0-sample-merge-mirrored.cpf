@@ -1,0 +1,49 @@
+[Actions]
+# Enable the Mirror Service in IRIS
+ModifyService:Name=%Service_Mirror,Enabled=1
+ 
+# Configure the instance as a Mirror primary, backup or Async.  Assume iscagent port is 2188
+ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:2188,UseSSL=1,SSLDir=<mirrorSSLDir>
+
+# Create resources for the component namespace
+CreateResource:Name=%DB_<COMPONENT NAMESPACE>-SOURCE,Description=The <COMPONENT NAMESPACE>-SOURCE database
+CreateResource:Name=%DB_<COMPONENT NAMESPACE>-DATA,Description=The <COMPONENT NAMESPACE>-DATA database
+CreateResource:Name=%DB_<COMPONENT NAMESPACE>,Description=<COMPONENT NAMESPACE>
+
+# Create corresponding roles for each resource
+CreateRole:Name=%DB_<COMPONENT NAMESPACE>-SOURCE,Resources=%DB_<COMPONENT NAMESPACE>-SOURCE:RW
+CreateRole:Name=%DB_<COMPONENT NAMESPACE>-DATA,Resources=%DB_<COMPONENT NAMESPACE>-DATA:RW
+CreateRole:Name=%DB_<COMPONENT NAMESPACE>,Resources=%DB_<COMPONENT NAMESPACE>:RW
+CreateRole:Name=%HS_DB_<COMPONENT NAMESPACE>
+ModifyRole:Name=%DB_<COMPONENT NAMESPACE>,GrantedRoles=%DB_<COMPONENT NAMESPACE>-SOURCE,%DB_<COMPONENT NAMESPACE>-DATA,%DB_HSCUSTOM
+
+# Create global and source code databases for the component namespace
+CreateDatabase:Name=<COMPONENT NAMESPACE>-DATA,Directory=<absolute path to global database>,Resource=%DB_<COMPONENT NAMESPACE>-DATA
+CreateDatabase:Name=<COMPONENT NAMESPACE>-SOURCE,Directory=<absolute path to source code database>,Resource=%DB_<COMPONENT NAMESPACE>-SOURCE
+
+# Create the component namespace
+CreateNamespace:Name=<COMPONENT NAMESPACE>,Globals=<COMPONENT NAMESPACE>-DATA,Routines=<COMPONENT NAMESPACE>-SOURCE,Interop=0
+
+# Enable IPM in the component namespace
+Execute:Namespace="USER",ClassName="%IPM.Main",MethodName="Shell",Arg1="enable -map -globally"
+
+# Create package mappings to the component namespace
+Execute:Namespace="<COMPONENT NAMESPACE>",ClassName="%EnsembleMgr",MethodName="map2enslib",Arg1="<COMPONENT NAMESPACE>",Arg2="1"
+CreateMapPackage:Namespace="<COMPONENT NAMESPACE>",Name="HS.HP.PAS.Local",Database=HSCUSTOM
+# Create package mapping for 2025.2 pre-release version of HS.HC.SystemConfig to HSSYS
+CreateMapPackage:Namespace="HSSYS",Name="HS.HC.SystemConfig",Database=<COMPONENT NAMESPACE>-SOURCE
+
+# Install module in the component namespace using local tarball
+Execute:Namespace="<COMPONENT NAMESPACE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="load <absolute path to module tarball> -verbose -DNoLock=1 -DNoTransaction=1 -DNoMapping=1 -synchronous"
+
+# Create default web app in the component namespace
+CreateApplication:Name=/csp/<component namespace lowercase>,NameSpace=<COMPONENT NAMESPACE>,Path=<component namespace lowercase>,AutheEnabled=8224,GroupById=%ISCMgtPortal,Description=Default csp application for namespace <COMPONENT NAMESPACE>
+
+# Run module-specific config
+Execute:Namespace="<COMPONENT NAMESPACE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_pas SetUpComponent -verbose"
+
+# Run implementation-specific config
+Execute:Namespace="<COMPONENT NAMESPACE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_pas ApplyUserDefinedConfiguration -verbose -env <absolute path to config file>"
+
+# Map ZAUTHENTICATE for OAuth2
+CreateMapRoutine:Namespace="%SYS",Name=ZAUTHENTICATE,Database=<COMPONENT NAMESPACE>-SOURCE
