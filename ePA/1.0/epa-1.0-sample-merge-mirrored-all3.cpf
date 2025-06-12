@@ -1,0 +1,95 @@
+[Actions]
+# Enable the Mirror Service in IRIS (remove for non-mirrored solution)
+ModifyService:Name=%Service_Mirror,Enabled=1
+  
+# Configure the instance as a Mirror primary, backup or Async.  Assume iscagent port is 2188. 
+# Remove for non-mirrored solution. 
+ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:2188,UseSSL=1,SSLDir=<mirrorSSLDir>
+
+# Create resources for the namespaces
+CreateResource:Name=%DB_<CRD namespace>-SOURCE,Description=The <CRD namespace>-SOURCE database
+CreateResource:Name=%DB_<CRD namespace>-DATA,Description=The <CRD namespace>-DATA database
+CreateResource:Name=%DB_<CRD namespace>,Description=<CRD namespace>
+
+CreateResource:Name=%DB_<DTR namespace>-SOURCE,Description=The <DTR namespace>-SOURCE database
+CreateResource:Name=%DB_<DTR namespace>-DATA,Description=The <DTR namespace>-DATA database
+CreateResource:Name=%DB_<DTR namespace>,Description=<DTR namespace>
+
+CreateResource:Name=%DB_<PAS namespace>-SOURCE,Description=The <PAS namespace>-SOURCE database
+CreateResource:Name=%DB_<PAS namespace>-DATA,Description=The <PAS namespace>-DATA database
+CreateResource:Name=%DB_<PAS namespace>,Description=<PAS namespace>
+
+# Create corresponding roles for each resource
+CreateRole:Name=%DB_<CRD namespace>-SOURCE,Resources=%DB_<CRD namespace>-SOURCE:RW
+CreateRole:Name=%DB_<CRD namespace>-DATA,Resources=%DB_<CRD namespace>-DATA:RW
+CreateRole:Name=%DB_<CRD namespace>,Resources=%DB_<CRD namespace>:RW
+CreateRole:Name=%HS_DB_<CRD namespace>
+ModifyRole:Name=%DB_<CRD namespace>,GrantedRoles=%DB_<CRD namespace>-SOURCE,%DB_<CRD namespace>-DATA,%DB_HSCUSTOM
+
+CreateRole:Name=%DB_<DTR namespace>-SOURCE,Resources=%DB_<DTR namespace>-SOURCE:RW
+CreateRole:Name=%DB_<DTR namespace>-DATA,Resources=%DB_<DTR namespace>-DATA:RW
+CreateRole:Name=%DB_<DTR namespace>,Resources=%DB_<DTR namespace>:RW
+CreateRole:Name=%HS_DB_<DTR namespace>
+ModifyRole:Name=%DB_<DTR namespace>,GrantedRoles=%DB_<DTR namespace>-SOURCE,%DB_<DTR namespace>-DATA,%DB_HSCUSTOM
+
+CreateRole:Name=%DB_<PAS namespace>-SOURCE,Resources=%DB_<PAS namespace>-SOURCE:RW
+CreateRole:Name=%DB_<PAS namespace>-DATA,Resources=%DB_<PAS namespace>-DATA:RW
+CreateRole:Name=%DB_<PAS namespace>,Resources=%DB_<PAS namespace>:RW
+CreateRole:Name=%HS_DB_<PAS namespace>
+ModifyRole:Name=%DB_<PAS namespace>,GrantedRoles=%DB_<PAS namespace>-SOURCE,%DB_<PAS namespace>-DATA,%DB_HSCUSTOM
+
+# Create global and source code databases 
+CreateDatabase:Name=<CRD namespace>-DATA,Directory=<absolute path to CRD global database>,Resource=%DB_<CRD namespace>-DATA
+CreateDatabase:Name=<CRD namespace>-SOURCE,Directory=<absolute path to CRD source code database>,Resource=%DB_<CRD namespace>-SOURCE
+CreateDatabase:Name=<DTR namespace>-DATA,Directory=<absolute path to DTR global database>,Resource=%DB_<DTR namespace>-DATA
+CreateDatabase:Name=<DTR namespace>-SOURCE,Directory=<absolute path to DTR source code database>,Resource=%DB_<DTR namespace>-SOURCE
+CreateDatabase:Name=<PAS namespace>-DATA,Directory=<absolute path to PAS global database>,Resource=%DB_<PAS namespace>-DATA
+CreateDatabase:Name=<PAS namespace>-SOURCE,Directory=<absolute path to PAS source code database>,Resource=%DB_<PAS namespace>-SOURCE
+
+# Create the component namespaces
+CreateNamespace:Name=<CRD namespace>,Globals=<CRD namespace>-DATA,Routines=<CRD namespace>-SOURCE,Interop=0
+CreateNamespace:Name=<DTR namespace>,Globals=<DTR namespace>-DATA,Routines=<DTR namespace>-SOURCE,Interop=0
+CreateNamespace:Name=<PAS namespace>,Globals=<PAS namespace>-DATA,Routines=<PAS namespace>-SOURCE,Interop=0
+ 
+# Enable IPM in all namespaces
+Execute:Namespace="USER",ClassName="%IPM.Main",MethodName="Shell",Arg1="enable -map -globally"
+ 
+# Create package mappings to the component namespaces
+Execute:Namespace="<CRD namespace>",ClassName="%EnsembleMgr",MethodName="map2enslib",Arg1="<CRD namespace>",Arg2="1"
+CreateMapPackage:Namespace="<CRD namespace>",Name="HS.HP.CRD.Local",Database=HSCUSTOM
+Execute:Namespace="<DTR namespace>",ClassName="%EnsembleMgr",MethodName="map2enslib",Arg1="<DTR namespace>",Arg2="1"
+CreateMapPackage:Namespace="HSSYS",Name="HS.HC.SystemConfig",Database=<DTR namespace>-SOURCE
+Execute:Namespace="<PAS namespace>",ClassName="%EnsembleMgr",MethodName="map2enslib",Arg1="<PAS namespace>",Arg2="1"
+CreateMapPackage:Namespace="<PAS namespace>",Name="HS.HP.PAS.Local",Database=HSCUSTOM
+
+# Create package mapping for 2025.2 pre-release version of HS.HC.SystemConfig to HSSYS (CRD and PAS only)
+CreateMapPackage:Namespace="HSSYS",Name="HS.HC.SystemConfig",Database=<CRD namespace>-SOURCE
+CreateMapPackage:Namespace="HSSYS",Name="HS.HC.SystemConfig",Database=<PAS namespace>-SOURCE
+
+# Install modules in the namespaces, using local tarballs
+Execute:Namespace="<CRD namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="load <absolute path to CRD tarball> -verbose -DNoLock=1 -DNoTransaction=1 -DNoMapping=1 -synchronous"
+Execute:Namespace="<DTR namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="load <absolute path to DTR tarball> -verbose -DNoLock=1 -DNoTransaction=1 -DNoMapping=1 -synchronous"
+Execute:Namespace="<PAS namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="load <absolute path to PAS tarball> -verbose -DNoLock=1 -DNoTransaction=1 -DNoMapping=1 -synchronous"
+ 
+# Create default web apps
+CreateApplication:Name=/csp/<CRD namespace lowercase>,NameSpace=<CRD namespace>,Path=<CRD namespace lowercase>,AutheEnabled=8224,GroupById=%ISCMgtPortal,Description=Default csp application for namespace <CRD namespace>
+CreateApplication:Name=/csp/<DTR namespace lowercase>,NameSpace=<DTR namespace>,Path=<DTR namespace lowercase>,AutheEnabled=8224,GroupById=%ISCMgtPortal,Description=Default csp application for namespace <DTR namespace>
+CreateApplication:Name=/csp/<PAS namespace lowercase>,NameSpace=<PAS namespace>,Path=<PAS namespace lowercase>,AutheEnabled=8224,GroupById=%ISCMgtPortal,Description=Default csp application for namespace <PAS namespace>
+ 
+# Run module-specific config
+Execute:Namespace="<CRD namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_crd SetUpComponent -verbose"
+Execute:Namespace="<DTR namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_dtr SetUpComponent -verbose"
+Execute:Namespace="<PAS namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_pas SetUpComponent -verbose"
+
+# Run implementation-specific config
+Execute:Namespace="<CRD namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_crd ApplyUserDefinedConfiguration -verbose -env <absolute path to CRD config file>"
+Execute:Namespace="<DTR namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_dtr ApplyUserDefinedConfiguration -verbose -env <absolute path to DTR config file>"
+Execute:Namespace="<PAS namespace>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_pas ApplyUserDefinedConfiguration -verbose -env <absolute path to PAS config file>"
+ 
+# Map ZAUTHENTICATE for OAuth2 - DTR and PAS only
+# NOTE: the second command will overwrite the results of the first, but the point is ensure that 
+# %SYS gets its ZAUTHENTICATE code from one of the Payer Services component modules. It should not matter which, because 
+# they use identical source code for this submodule. 
+# If this file is cloned and trimmed down to exclude one or another of the components, keep one of these as needed.
+CreateMapRoutine:Namespace="%SYS",Name=ZAUTHENTICATE,Database=<DTR namespace>-SOURCE
+CreateMapRoutine:Namespace="%SYS",Name=ZAUTHENTICATE,Database=<PAS namespace>-SOURCE
