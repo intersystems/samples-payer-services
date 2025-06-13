@@ -2,8 +2,8 @@
 # Enable the Mirror Service in IRIS
 ModifyService:Name=%Service_Mirror,Enabled=1
  
-# Configure the instance as a Mirror primary, backup or Async.  Assume iscagent port is 2188
-ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:2188,UseSSL=1,SSLDir=<mirrorSSLDir>
+# Configure the instance as a Mirror primary, backup or Async. 
+ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:<port>,UseSSL=1,SSLDir=<mirrorSSLDir>
 
 # Create resources for the component namespace
 CreateResource:Name=%DB_<COMPONENT NAMESPACE>-SOURCE,Description=The <COMPONENT NAMESPACE>-SOURCE database

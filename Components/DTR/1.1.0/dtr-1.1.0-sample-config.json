@@ -1,0 +1,48 @@
+{
+    "intersystems_payer_services_hp_dtr":{
+        "interopCredentials":[
+            {
+                "identifier":"<UM credentials identifier>",
+                "userName":"<user name>",
+                "password":"<password>"
+            }
+        ],
+        "sslConfigs":[
+            {
+                "name":"<SSL configuration name>",
+                "description":"<description>",
+                "verifyPeer":<boolean>,
+                "privateKeyType":"<private key type, e.g. RSA>",
+                "tlsMaxVersion":"<maximum TLS version, e.g. TLSv1.3>",
+                "tlsMinVersion":"<minimum TLS version, e.g. TLSv1.2>",
+                "ocsp": <boolean>
+            }
+        ],
+        "httpServices":[
+            {
+                "name":"DTR|UMSYSTEM",
+                "host":"<host>",
+                "port":<port>,
+                "url":"<URL, not including host and port>",
+                "sslConfig":"<SSL configuration name>",
+                "httpCredentialsConfig":"<UM credentials identifier>",
+                "authType": "<auth type, e.g. 'basic'>"
+            }
+        ],
+        "oAuthServerConfigs":[
+            {
+                "oAuthServerEndpoint":"<OAuth2 endpoint>",
+                "oAuthServerSSLConfig":"<SSL configuration name>",
+                "clients":[
+                    {
+                        "clientName":"DTRResourceServer",
+                        "clientType":"resource",
+                        "sslConfiguration":"<SSL configuration name>",
+                        "clientCredentialsID":"<credentials ID>",
+                        "clientSecret":"<client secret>"
+                    }
+                ]
+            }
+        ]
+    }
+}

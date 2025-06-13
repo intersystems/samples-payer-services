@@ -2,9 +2,9 @@
 # Enable the Mirror Service in IRIS (remove for non-mirrored solution)
 ModifyService:Name=%Service_Mirror,Enabled=1
   
-# Configure the instance as a Mirror primary, backup or Async.  Assume iscagent port is 2188. 
+# Configure the instance as a Mirror primary, backup or Async.
 # Remove for non-mirrored solution. 
-ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:2188,UseSSL=1,SSLDir=<mirrorSSLDir>
+ConfigMirror:Name=<mirrorName>,Member=<mirrorRole>,Primary=<primaryHostname>,ArbiterURL=<arbiterHostname>:<port>,UseSSL=1,SSLDir=<mirrorSSLDir>
 
 # Create resources for the namespaces
 CreateResource:Name=%DB_<CRD namespace>-SOURCE,Description=The <CRD namespace>-SOURCE database

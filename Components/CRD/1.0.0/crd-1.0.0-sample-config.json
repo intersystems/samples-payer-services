@@ -3,23 +3,23 @@
         "interopCredentials": [],
         "sslConfigs": [
             {
-                "name": "ISC.FeatureTracker.SSL.ConfigTest",
-                "description": "For contacting OAuth server for CRD",
-                "verifyPeer": false,
-                "privateKeyType": "RSA",
-                "tlsMaxVersion": "TLSv1.3",
-                "tlsMinVersion": "TLSv1.2",
-                "ocsp": false
+                "name": "<SSL configuration name>",
+                "description":"<description>",
+                "verifyPeer":<boolean>,
+                "privateKeyType":"<private key type, e.g. RSA>",
+                "tlsMaxVersion":"<maximum TLS version, e.g. TLSv1.3>",
+                "tlsMinVersion":"<minimum TLS version, e.g. TLSv1.2>",
+                "ocsp": <boolean>
             }
         ],
         "httpServices": [
             {
                 "name": "UMProxy",
-                "host": "crd.davinci.hl7.org",
-                "port": 443,
-                "url": "r4",
-                "sslConfig": "ISC.FeatureTracker.SSL.Config",
-                "authType": "none"
+                "host": "<host>",
+                "port": <port>,
+                "url":"<URL, not including host and port>",
+                "sslConfig": "<SSL configuration name>",
+                "authType": "<auth type, e.g. 'basic'>"
             }
         ],
         "oAuthServerConfigs": [],
@@ -42,7 +42,7 @@
                         },
                         {
                             "settingName": "SSLConfig",
-                            "settingValue": "ISC.FeatureTracker.SSL.ConfigTest",
+                            "settingValue": "<SSL configuration name>",
                             "target": "Host"
                         },
                         {
@@ -73,7 +73,7 @@
                         },
                         {
                             "settingName": "OAuth2Scope",
-                            "settingValue": "user/cds_hooks.write user/test.write",
+                            "settingValue": "user/cds_hooks.write",
                             "target": "Host"
                         }
                     ]
@@ -84,12 +84,12 @@
             "issuer": [
                 "https://inferno.healthit.gov/suites/custom/crd_server",
                 "https://inferno-qa.healthit.gov/suites/custom/crd_server",
-                "<OAuth server URL>"
+                "<OAuth issuer>"
             ],
             "jku": [
                 "https://inferno.healthit.gov/suites/custom/crd_server/jwks.json",
                 "https://inferno-qa.healthit.gov/suites/custom/crd_server/jwks.json",
-                "<OAuth public key URL>"
+                "<OAuth keys URL>"
             ],
             "origin": []
         }
