@@ -2,86 +2,86 @@
     "intersystems_payer_services_hp_pas":{
         "interopCredentials":[
             {
-                "identifier":"pasUmCreds",
-                "userName":"<username>",
+                "identifier":"<UM credentials identifier>",
+                "userName":"<user name>",
                 "password":"<password>"
             }
         ],
         "sslConfigs":[
             {
-                "name":"ISC.FeatureTracker.SSL.Config",
-                "description":"For contacting OAuth server for PAS",
-                "verifyPeer":false,
-                "privateKeyType":"RSA",
-                "tlsMaxVersion":"TLSv1.3",
-                "tlsMinVersion":"TLSv1.2",
-                "ocsp":false
+                "name":"<SSL configuration name for OAuth connection>",
+                "description":"<description>",
+                "verifyPeer":<boolean>,
+                "privateKeyType":"<private key type, e.g. RSA>",
+                "tlsMaxVersion":"<maximum TLS version, e.g. TLSv1.3>",
+                "tlsMinVersion":"<minimum TLS version, e.g. TLSv1.2>",
+                "ocsp":<boolean>
             },
             {
-                "name":"LocalUMConfig",
-                "description":"For contacting local UM server",
-                "verifyPeer":false,
-                "privateKeyType":"RSA",
-                "tlsMaxVersion":"TLSv1.3",
-                "tlsMinVersion":"TLSv1.2",
-                "ocsp":false
+                "name":"<SSL configuration name for UM connection>",
+                "description":"<description>",
+                "verifyPeer":<boolean>,
+                "privateKeyType":"<private key type, e.g. RSA>",
+                "tlsMaxVersion":"<maximum TLS version, e.g. TLSv1.3>",
+                "tlsMinVersion":"<minimum TLS version, e.g. TLSv1.2>",
+                "ocsp":<boolean>
             }
         ],
         "httpServices":[
             {
                 "name":"PAS|SUBMIT",
-                "host":"usp5570qxie.iscinternal.com",
-                "port":3000,
-                "url":"/claim",
-                "sslConfig":"ISC.FeatureTracker.SSL.Config",
-                "httpCredentialsConfig":"pasUmCreds",
-                "authType": "basic"
+                "host":"<host>",
+                "port":<port>,
+                "url":"<URL, not including host and port>",
+                "sslConfig":"<SSL configuration name for OAuth connection>",
+                "httpCredentialsConfig":"<UM credentials identifier>",
+                "authType": "<auth type, e.g. 'basic'>"
             },
             {
                 "name":"PAS|INQUIRE",
-                "host":"usp5570qxie.iscinternal.com",
-                "port":3000,
-                "url":"/claim",
-                "sslConfig":"ISC.FeatureTracker.SSL.Config",
-                "httpCredentialsConfig":"pasUmCreds",
-                "authType": "basic"
+                "host":"<host>",
+                "port":<port>,
+                "url":"<URL, not including host and port>",
+                "sslConfig":"<SSL configuration name for OAuth connection>",
+                "httpCredentialsConfig":"<UM credentials identifier>",
+                "authType": "<auth type, e.g. 'basic'>"
             },
             {
                 "name":"PAS|SUBSCRIPTION",
-                "host":"usp5570qxie.iscinternal.com",
-                "port":3002,
-                "url":"/claim",
-                "sslConfig":"ISC.FeatureTracker.SSL.Config",
-                "httpCredentialsConfig":"pasUmCreds",
-                "authType": "basic"
+                "host":"<host>",
+                "port":<port>,
+                "url":"<URL, not including host and port>",
+                "sslConfig":"<SSL configuration name for OAuth connection>",
+                "httpCredentialsConfig":"<UM credentials identifier>",
+                "authType": "<auth type, e.g. 'basic'>"
             }
         ],
         "oAuthServerConfigs":[
             {
-                "oAuthServerEndpoint":"<OAuth server URL>",
-                "oAuthServerSSLConfig":"ISC.FeatureTracker.SSL.Config",
+                "oAuthServerEndpoint":"<OAuth2 endpoint for PAS connection>",
+                "oAuthServerSSLConfig":"<SSL configuration name for OAuth connection>",
                 "clients":[
                     {
                         "clientName":"PASResourceServer",
                         "clientType":"resource",
-                        "sslConfiguration":"ISC.FeatureTracker.SSL.Config",
+                        "sslConfiguration":"<SSL configuration name for OAuth connection>",
                         "clientCredentialsID":"<client credentials ID>",
                         "clientSecret":"<client secret>"
                     }
                 ]
             },
             {
-                "oAuthServerEndpoint":"<OAuth server URL>",
-                "oAuthServerSSLConfig":"ISC.FeatureTracker.SSL.Config",
+                "oAuthServerEndpoint":"<OAuth 2 endpoint for UM connections>",
+                "oAuthServerSSLConfig":"<SSL configuration name for OAuth connection>",
                 "clients":[
                     {
                         "clientName":"UMClient",
+                        "clientType":"confidential",
+                        "sslConfiguration":"<SSL configuration name for UM connection>"
                         "redirectUrlHost":"",
                         "redirectUrlPort":"",
                         "clientCredentialsID":"<client credentials ID>",
                         "clientSecret":"<client secret>",
-                        "clientType":"confidential",
-                        "sslConfiguration":"LocalUMConfig"
                     }
                 ]
             }
