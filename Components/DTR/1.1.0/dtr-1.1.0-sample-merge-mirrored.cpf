@@ -3,7 +3,7 @@
 ModifyService:Name=%Service_Mirror,Enabled=1
  
 # Configure the instance as a Mirror primary, backup or Async. 
-ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<mirror SSL directory>
+ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<mirror ssl directory>
 
 # Create resources for the component namespace
 CreateResource:Name=%DB_<COMPONENT NAMESPACE>-SOURCE,Description=The <COMPONENT NAMESPACE>-SOURCE database

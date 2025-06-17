@@ -4,7 +4,7 @@ ModifyService:Name=%Service_Mirror,Enabled=1
   
 # Configure the instance as a Mirror primary, backup or Async.
 # Remove for non-mirrored solution. 
-ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<mirror SSL directory>
+ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<mirror ssl directory>
 
 # Create resources for the namespaces
 CreateResource:Name=%DB_<CRD namespace>-SOURCE,Description=The <CRD namespace>-SOURCE database
