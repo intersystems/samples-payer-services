@@ -77,7 +77,7 @@
                     {
                         "clientName":"UMClient",
                         "clientType":"confidential",
-                        "sslConfiguration":"<SSL configuration name for UM connection>"
+                        "sslConfiguration":"<SSL configuration name for UM connection>",
                         "redirectUrlHost":"",
                         "redirectUrlPort":"",
                         "clientCredentialsID":"<client credentials ID>",
