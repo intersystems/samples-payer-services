@@ -1,0 +1,81 @@
+{
+    "intersystems_payer_services_hp_pdexmm": {
+        "interopCredentials": [
+            {
+                "identifier": "empiCreds",
+                "userName": "<username>",
+                "password": "<password>"
+            }
+        ],
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.Config",
+                "description": "For contacting OAuth server for PDexMM",
+                "verifyPeer": false,
+                "privateKeyType": "RSA",
+                "tlsMaxVersion": "TLSv1.3",
+                "tlsMinVersion": "TLSv1.2",
+                "ocsp": false
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "PDexMM|MATCH",
+                "host": "<host>",
+                "port": <port>,
+                "url": "<url>", 
+                         "sslConfig": "ISC.FeatureTracker.SSL.Config",
+                "httpCredentialsConfig": "empiCreds",
+                "authType": "basic"
+            },
+            {
+                "name": "PDexMM|CONSENT",
+                "host": "<host>",
+                "port": <port>,
+                "url": "<url>",
+                "sslConfig": "ISC.FeatureTracker.SSL.Config",
+                "authType": "none"
+            }
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<oauthServer>",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.Config",
+                "clients": [
+                    {
+                        "clientName": "PDexMMResourceServer",
+                        "clientType": "resource",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.Config",
+                        "clientCredentialsID": "<clientCredentialsID>",
+                        "clientSecret": "<clientSecret>"
+                    }
+                ]
+            }
+        ],
+		"productionSettings": {
+            "productionName": "HS.HP.PDexMM.Local.Production",
+            "items": [
+                {
+                    "name": "MemberMatchOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "PDexMM|MATCH",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "MemberConsentOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "PDexMM|CONSENT",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
