@@ -1,13 +1,18 @@
 # Payer_Services
 
-Sample config.json and CPF merge files for the InterSystems Payer Services products. 
+This repository contains sample CPF merge files and sample JSON configuration files to help you deploy InterSystems Payer Services.
 
-CRD: Coverage Requirements Discovery
+See [the product documentation](https://www.intersystems.com/products/healthshare/payer-services/) for details on how to deploy and use InterSystems Payer Services.  Access to this documentation requires an account. If you do not have one, please contact your InterSystems sales representative or complete the form on [our Contact Us page](https://www.intersystems.com/contact-us/) and we’ll be in touch.
 
-DTR: Documentation Templates and Rules
+A [solution overview](https://www.intersystems.com/industries/public-private-payers/) is available on the InterSystems website.
 
-PAS: Prior Authorization Support
-
-ePriorAuth (Electronic Prior Authorization) 1.0 consists of: CRD 1.0.0, DTR 1.1.0, and PAS 1.1.0.
+ePriorAuth (Electronic Prior Authorization) consists of: 
+- Coverage Requirements Discovery (CRD) 
+- Documentation Templates and Rules (DTR) 
+- Prior Authorization Support (PAS)
 
 The ePriorAuth subfolder is for sample merge.cpf files that combine the individual components' merge files, to provide an example of a merge file that should work for setting up all three together. The config.json files for each component module cannot be combined in this way as of ePA 1.0. 
+
+| ePA version | CRD   | DTR   | PAS   |
+| :---------- | :---- | :---- | :---- |
+| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 |
