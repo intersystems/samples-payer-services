@@ -1,0 +1,152 @@
+{
+    "$intersystems_payer_services_hp_dtrNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_services_hp_dtr": {
+        "$interopCredentialsNote": "username/password credentials for logging into remote systems with 'basic' auth; can be referenced in the httpServices object",
+        "$interopCredentialsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_creds",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars"
+        ],
+        "interopCredentials": [
+            {
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<PIF credentials identifier>",
+                "userName": "<user name>",
+                "password": "<password environment variable>"
+            }
+        ],
+        "$sslConfigsNote": "SSL configurations for network connections",
+        "$sslConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_ssl",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_tls"
+        ],
+        "sslConfigs": [
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name>",
+                "description": "<description for SSL config>",
+                "verifyPeer": <boolean>,
+                "tlsMaxVersion": "<maximum TLS version>",
+                "tlsMinVersion": "<minimum TLS version>",
+                "ocsp": <boolean>,
+                "privateKeyType": "<private key type>"
+            }
+        ],
+        "$httpServicesNote": "HTTP connection configurations",
+        "$httpServicesDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_http",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=EHTTP_settings_outbound"
+        ],
+        "httpServices": [
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<PIF service name>",
+                "host": "<host>",
+                "port": <port>,
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name for PIF client>",
+                "url": "<PIF base URL path for DTR operations, not including scheme, host, and port>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<PIF credentials identifier>",
+                "authType": "<auth type>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for resource server>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for resource server>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "DTRResourceServer",
+                        "clientCredentialsID": "<credentials ID for resource server>",
+                        "clientSecret": "<client secret environment variable for resource server>",
+                        "clientType": "resource",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for resource server>"
+                    }
+                ]
+            },
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for PIF client>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for PIF client>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "<PIF OAuth client name>",
+                        "clientCredentialsID": "<credentials ID for PIF server>",
+                        "clientSecret": "<client secret environment variable for PIF client>",
+                        "clientType": "confidential",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for PIF client>",
+                        "redirectUrlHost": "<redirect host>",
+                        "redirectUrlPort": "<redirect port>"
+                    }
+                ]
+            }
+        ],
+        "$productionSettingsNote": "interoperability production configuration and settings",
+        "$productionSettingsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_prod",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ECONFIG_config_settings"
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.DTR.Local.Production",
+            "items": [
+                {
+                    "$nameNote": "the business host name",
+                    "name": "dtr-v2.0.1",
+                    "settings": [
+                        {
+                            "settingName": "ValidateProfile",
+                            "$settingValueNote": "controls whether FHIR resource profile validation is performed in addition to structural validation",
+                            "settingValue": "0",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "dtr-v2.1.0",
+                    "settings": [
+                        {
+                            "settingName": "ValidateProfile",
+                            "$settingValueNote": "controls whether FHIR resource profile validation is performed in addition to structural validation",
+                            "settingValue": "0",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "PayerOperation",
+                    "settings": [
+                        {
+                            "settingName": "PIFService",
+                            "$settingValueNote": "references httpServices object",
+                            "settingValue": "<PIF service name>",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "OAuth2Scope",
+                            "settingValue": "<scope>",
+                            "target": "Adapter"
+                        },
+                        {
+                            "settingName": "OAuthClient",
+                            "settingValue": "<PIF OAuth client name>",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,58 @@
+[Actions]
+# Enable the Mirror Service in IRIS
+ModifyService:Name=%Service_Mirror,Enabled=1
+ 
+# Configure the instance as a Mirror primary, backup or Async. 
+ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<mirror ssl directory>
+
+# Create resources for the component namespace
+CreateResource:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>-SOURCE,Description=The <MODULE-NAMESPACE-UPPERCASE>-SOURCE database
+CreateResource:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>-DATA,Description=The <MODULE-NAMESPACE-UPPERCASE>-DATA database
+CreateResource:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>,Description=<MODULE-NAMESPACE-UPPERCASE>
+
+# Create corresponding roles for each resource
+CreateRole:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>-SOURCE,Resources=%DB_<MODULE-NAMESPACE-UPPERCASE>-SOURCE:RW
+CreateRole:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>-DATA,Resources=%DB_<MODULE-NAMESPACE-UPPERCASE>-DATA:RW
+CreateRole:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>,Resources=%DB_<MODULE-NAMESPACE-UPPERCASE>:RW
+CreateRole:Name=%HS_DB_<MODULE-NAMESPACE-UPPERCASE>
+ModifyRole:Name=%DB_<MODULE-NAMESPACE-UPPERCASE>,GrantedRoles=%DB_<MODULE-NAMESPACE-UPPERCASE>-SOURCE,%DB_<MODULE-NAMESPACE-UPPERCASE>-DATA,%DB_HSCUSTOM
+
+# Create global and source code databases for the component namespace
+CreateDatabase:Name=<MODULE-NAMESPACE-UPPERCASE>-SOURCE,Directory=<instance-install-directory>/mgr/<module-namespace-lowercase>-source,Resource=%DB_<MODULE-NAMESPACE-UPPERCASE>-SOURCE
+CreateDatabase:Name=<MODULE-NAMESPACE-UPPERCASE>-DATA,Directory=<instance-install-directory>/mgr/<module-namespace-lowercase>-data,Resource=%DB_<MODULE-NAMESPACE-UPPERCASE>-DATA
+
+# Create the component namespace
+CreateNamespace:Name=<MODULE-NAMESPACE-UPPERCASE>,Globals=<MODULE-NAMESPACE-UPPERCASE>-DATA,Routines=<MODULE-NAMESPACE-UPPERCASE>-SOURCE,Interop=0
+
+# Create IPM global mappings to point source database
+CreateMapGlobal:Namespace=<MODULE-NAMESPACE-UPPERCASE>,Name=IPM*,Database=<MODULE-NAMESPACE-UPPERCASE>-SOURCE
+CreateMapGlobal:Namespace=<MODULE-NAMESPACE-UPPERCASE>,Name=IRIS.Temp.IPM*,Database=<MODULE-NAMESPACE-UPPERCASE>-SOURCE
+
+# Enable IPM in the component namespace
+Execute:Namespace="USER",ClassName="%IPM.Main",MethodName="Shell",Arg1="enable -map -ns <MODULE-NAMESPACE-UPPERCASE>"
+
+# Create package mappings to the component namespace
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%EnsembleMgr",MethodName="map2enslib",Arg1="<MODULE-NAMESPACE-UPPERCASE>",Arg2="1"
+CreateMapPackage:Namespace="<MODULE-NAMESPACE-UPPERCASE>",Name="HS.HP.DTR.Local",Database=HSCUSTOM
+
+# Create package mapping for 2025.2 pre-release version of HS.HC.SystemConfig to HSSYS
+<Delete this line if using InterSystems IRIS for Health 2025.2 or later. Otherwise, remove this note so that the line will execute.>CreateMapPackage:Namespace="HSSYS",Name="HS.HC.SystemConfig",Database=<MODULE-NAMESPACE-UPPERCASE>-SOURCE
+
+
+
+# Install module in the component namespace using local tarball
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="load <path-and-filename-of-module-artifact> -verbose -DNoLock=1 -DNoTransaction=1 -DNoMapping=1 -synchronous"
+
+# Create default web app in the component namespace
+CreateApplication:Name=/csp/<module-namespace-lowercase>,NameSpace=<MODULE-NAMESPACE-UPPERCASE>,Path=<module-namespace-lowercase>,AutheEnabled=8224,GroupById=%ISCMgtPortal,Description=Default csp application for namespace <MODULE-NAMESPACE-UPPERCASE>
+
+# Run module-specific config
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_dtr SetUpComponent -verbose"
+
+# Run implementation-specific config
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="intersystems_payer_services_hp_dtr ApplyUserDefinedConfiguration -verbose -env <path-and-filename-of-json-config>"
+
+# Map ZAUTHENTICATE for OAuth2
+CreateMapRoutine:Namespace="%SYS",Name=ZAUTHENTICATE,Database=<MODULE-NAMESPACE-UPPERCASE>-SOURCE
+
+
