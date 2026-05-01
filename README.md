@@ -12,8 +12,6 @@ ePriorAuth (Electronic Prior Authorization) consists of:
 - Prior Authorization Support (PAS)
 - Payer Integration Framework (PIF)
 
-The ePriorAuth subfolder is for sample merge.cpf files that combine the individual components' merge files, to provide an example of a merge file that should work for setting up all three together. The config.json files for each component module cannot be combined in this way as of ePA 1.0. 
-
 | ePA version | CRD   | DTR   | PAS   | PIF    |
 | :---------- | :---- | :---- | :---- |:------ |
 | 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) |
