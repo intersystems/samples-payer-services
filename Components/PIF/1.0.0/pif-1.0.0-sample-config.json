@@ -1,0 +1,100 @@
+{
+    "$intersystems_payer_integration_frameworkNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_integration_framework": {
+        "$interopCredentialsNote": "username/password credentials for logging into remote systems with 'basic' auth; can be referenced in the httpServices object",
+        "$interopCredentialsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_creds",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars"
+        ],
+        "interopCredentials": [
+            {
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<External FHIR repo credentials identifier>",
+                "userName": "<username>",
+                "password": "<password environment variable>"
+            }
+        ],
+        "$sslConfigsNote": "SSL configurations for network connections",
+        "$sslConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_ssl",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_tls"
+        ],
+        "sslConfigs": [
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name for External FHIR repo>",
+                "description": "<description for External FHIR repo config>",
+                "verifyPeer": <boolean>,
+                "tlsMaxVersion": "<maximum TLS version>",
+                "tlsMinVersion": "<minimum TLS version>",
+                "ocsp": <boolean>,
+                "privateKeyType": "<private key type>"
+            },
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name for Framework FHIR repo>",
+                "description": "<description for Framework FHIR repo config>",
+                "verifyPeer": <boolean>,
+                "tlsMaxVersion": "<maximum TLS version>",
+                "tlsMinVersion": "<minimum TLS version>",
+                "ocsp": <boolean>,
+                "privateKeyType": "<private key type>"
+            }
+        ],
+        "$httpServicesNote": "HTTP connection configurations",
+        "$httpServicesDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_http",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=EHTTP_settings_outbound"
+        ],
+        "httpServices": [
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<External FHIR repo service name>",
+                "host": "<External FHIR repo host>",
+                "port": "<External FHIR repo port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name for External FHIR repo>",
+                "url": "<External FHIR repo endpoint URL, not including scheme, host, and port>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<External FHIR repo credentials identifier>",
+                "authType": "<External FHIR repo auth type>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<Framework FHIR repo service name>",
+                "host": "<Framework FHIR repo host>",
+                "port": "<Framework FHIR repo port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name for Framework FHIR repo>",
+                "url": "<Framework FHIR repo endpoint URL, not including scheme, host, and port>",
+                "authType": "<Framework FHIR repo auth type>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for Framework FHIR repo>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for Framework FHIR repo>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "<Framework FHIR repo OAuth client name>",
+                        "clientCredentialsID": "<credentials ID for Framework FHIR repo>",
+                        "clientSecret": "<client secret environment variable for Framework FHIR repo>",
+                        "clientType": "confidential",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for Framework FHIR repo>",
+                        "redirectUrlHost": "<redirect host>",
+                        "redirectUrlPort": "<redirect port>"
+                    }
+                ]
+            }
+        ]
+    }
+}

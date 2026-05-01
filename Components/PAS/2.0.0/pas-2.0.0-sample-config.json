@@ -1,0 +1,94 @@
+{
+    "$intersystems_payer_services_hp_pasNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_services_hp_pas": {
+        "$sslConfigsNote": "SSL configurations for network connections",
+        "$sslConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_ssl",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_tls"
+        ],
+        "sslConfigs": [
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name>",
+                "description": "<description for SSL config>",
+                "verifyPeer": <boolean>,
+                "tlsMaxVersion": "<maximum TLS version>",
+                "tlsMinVersion": "<minimum TLS version>",
+                "ocsp": <boolean>,
+                "privateKeyType": "<private key type>"
+            }
+        ],
+        "$httpServicesNote": "HTTP connection configurations",
+        "$httpServicesDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_http",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=EHTTP_settings_outbound"
+        ],
+        "httpServices": [
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<PIF service name>",
+                "host": "<host>",
+                "port": <port>,
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration for OAuth connection>",
+                "$urlNote": "base URL path for PAS operations (this would typically point to the Payer Integration Framework); operation-specific paths (/Claim/$submit, /Claim/$inquire, /Subscription) will be appended by the PayerOperation",
+                "url": "<base URL path, not including scheme, host, and port>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<UM credentials identifier>",
+                "authType": "<auth type>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for resource server>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration for resource server>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "PASResourceServer",
+                        "clientCredentialsID": "<client credentials ID for resource server>",
+                        "clientSecret": "<client secret environment variable for resource server>",
+                        "clientType": "resource",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration for resource server>"
+                    }
+                ]
+            }
+        ],
+        "$productionSettingsNote": "interoperability production configuration and settings",
+        "$productionSettingsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_prod",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ECONFIG_config_settings"
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.PAS.Local.Production",
+            "settings": [
+                {
+                    "settingName": "CollectMetrics",
+                    "settingValue": "1",
+                    "target": "Production"
+                }
+            ],
+            "items": [
+                {
+                    "$nameNote": "the business host name",
+                    "name": "PayerOperation",
+                    "settings": [
+                        {
+                            "settingName": "PIFService",
+                            "settingValue": "<PIF service name>",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
