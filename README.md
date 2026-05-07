@@ -11,8 +11,9 @@ ePriorAuth (Electronic Prior Authorization) consists of:
 - Documentation Templates and Rules (DTR) 
 - Prior Authorization Support (PAS)
 - Payer Integration Framework (PIF)
+- FHIR Storage Manager (FHIRStorage)
 
-| ePA version | CRD   | DTR   | PAS   | PIF    |
-| :---------- | :---- | :---- | :---- |:------ |
-| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) |
-| 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  |
+| ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage |
+| :---------- | :---- | :---- | :---- |:------ | :---------- |
+| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      |
+| 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       |

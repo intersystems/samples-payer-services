@@ -1,0 +1,46 @@
+{
+    "$intersystems_payer_services_hp_fhir_storageNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_services_hp_fhir_storage": {
+        "$sslConfigsNote": "SSL configurations for network connections",
+        "$sslConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_ssl",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_tls"
+        ],
+        "sslConfigs": [
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name for resource server>",
+                "description": "<description for resource SSL config>",
+                "verifyPeer": <boolean>,
+                "tlsMaxVersion": "<maximum TLS version>",
+                "tlsMinVersion": "<minimum TLS version>",
+                "ocsp": <boolean>,
+                "privateKeyType": "<private key type>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for resource server>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for resource server>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "FHIRStorageResourceServer",
+                        "clientCredentialsID": "<credentials ID for resource server>",
+                        "clientSecret": "<client secret environment variable for resource server>",
+                        "clientType": "resource",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for resource server>"
+                    }
+                ]
+            }
+        ]
+    }
+}
