@@ -6,16 +6,16 @@ See the [product documentation](https://docs.intersystems.com/healthmodules/csp/
 
 A [solution overview](https://www.intersystems.com/products/healthshare/payer-services/) is available on the InterSystems website.
 
-Electronic Prior Authorization (ePA) consists of: 
+The Electronic Prior Authorization (ePA) solution consists of: 
 - Coverage Requirements Discovery (CRD) 
 - Documentation Templates and Rules (DTR) 
 - Prior Authorization Support (PAS)
 - Payer Integration Framework (PIF)
 - FHIR Storage Manager (FHIRStorage)
 
-Additionally, Member Match (PDexMM) is a component of Payer Data Exchange.
-
 | ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage |
 | :---------- | :---- | :---- | :---- |:------ | :---------- |
 | 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      |
 | 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       |
+
+The Data Exchange solution includes the Member Match (PDexMM) component.
