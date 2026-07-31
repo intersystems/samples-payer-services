@@ -18,4 +18,4 @@ The Electronic Prior Authorization (ePA) solution consists of:
 | 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      |
 | 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       |
 
-The Data Exchange solution includes the Member Match (PDexMM) component.
+The Data Exchange solution includes the Member Match (PDexMM) and Attribution (ATR) components.
