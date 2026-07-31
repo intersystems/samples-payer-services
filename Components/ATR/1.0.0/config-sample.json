@@ -1,0 +1,39 @@
+{
+    "intersystems_payer_services_hp_atr": {
+        "productionSettings": {
+            "productionName": "HS.HP.ATR.Local.Production",
+            "items": [
+                {
+                    "name": "HS.HP.ATR.Interop.UpdateFileService",
+                    "settings": [
+                        {
+                            "settingName": "FilePath",
+                            "settingValue": "c:\\intersystems\\PDEX\\Data\\ATR\\csv-update",
+                            "target": "Adapter"
+                        },
+                        {
+                            "settingName": "FileSpec",
+                            "settingValue": "*.csv",
+                            "target": "Adapter"
+                        }
+                    ]
+                },
+                {
+                    "name": "HS.HP.ATR.Interop.DeletionFileService",
+                    "settings": [
+                        {
+                            "settingName": "FilePath",
+                            "settingValue": "c:\\intersystems\\PDEX\\Data\\ATR\\csv-delete",
+                            "target": "Adapter"
+                        },
+                        {
+                            "settingName": "FileSpec",
+                            "settingValue": "*.csv",
+                            "target": "Adapter"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
