@@ -13,9 +13,15 @@ The Electronic Prior Authorization (ePA) solution consists of:
 - Payer Integration Framework (PIF)
 - FHIR Storage Manager (FHIRStorage)
 
-| ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage |
-| :---------- | :---- | :---- | :---- |:------ | :---------- |
-| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      |
-| 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       |
+| ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage | Released |
+| :---------- | :---- | :---- | :---- |:------ | :---------- | :------- |
+| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      | 6/2025   |
+| 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       | 4/2026   |
 
-The Data Exchange solution includes the Member Match (PDexMM) and Attribution (ATR) components.
+The Data Exchange solution includes the Payer Data Exchange (PDex), Member Match (PDexMM) and Attribution (ATR) components.
+
+| PDex  | PDexMM | ATR   | Released |
+| :---- | :----- | :---- | :------- |
+| 2.0.0 | 3.0.0  | 1.0.0 | 8/2026   |
+
+
