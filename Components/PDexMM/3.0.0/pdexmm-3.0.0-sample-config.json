@@ -1,0 +1,226 @@
+{
+    "$intersystems_payer_services_hp_pdexmmNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_services_hp_pdexmm": {
+        "$interopCredentialsNote": "username/password credentials for logging into remote systems with 'basic' auth; can be referenced in the httpServices object",
+        "$interopCredentialsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_creds",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars"
+        ],
+        "interopCredentials": [
+            {
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<credentials name>",
+                "userName": "<credentials user>",
+                "password": "<credentials pwd>"
+            },
+            {
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "empiCreds",
+                "userName": "_system",
+                "password": "SYS"
+            },
+            {
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "PDex_User",
+                "userName": "PDex_User",
+                "password": "PDex_User"
+            }
+        ],
+        "$sslConfigsNote": "SSL configurations for network connections",
+        "$sslConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_ssl",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_tls"
+        ],
+        "sslConfigs": [
+            {
+                "$nameNote": "can be referenced in the oAuthServerConfigs and httpServices objects",
+                "name": "<SSL configuration name>",
+                "description": "<description>",
+                "verifyPeer": <boolean>,
+                "privateKeyType": "<private key type, e.g. RSA>",
+                "tlsMaxVersion": "<maximum TLS version, e.g. TLSv1.3>",
+                "tlsMinVersion": "<minimum TLS version, e.g. TLSv1.2>",
+                "ocsp": <boolean>
+            }
+        ],
+        "httpServices": [
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<match service name>",
+                "host": "<match host>",
+                "port": <match port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<match URL, not including host and port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<sys credentials name>",
+                "authType": "<match auth type, e.g. 'basic'>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<consent service name>",
+                "host": "<consent host>",
+                "port": <consent port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<consent URL, not including host and port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<PDex_User credentials name>",
+                "authType": "<consent auth type, e.g. 'basic'>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<dummy consent service name>",
+                "host": "<dummy consent host>",
+                "port": <dummy consent port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<dummy consent URL, not including host and port>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<credentials name>",
+                "authType": "<dummy consent auth type, e.g. 'basic'>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<ODS service name>",
+                "host": "<ODS host>",
+                "port": <ODS port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<ODS URL, not including host and port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<credentials name>",
+                "authType": "<ODS auth type, e.g. 'basic'>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<ATR service name>",
+                "host": "<ATR host>",
+                "port": <ATR port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<ATR URL, not including host and port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<sys credentials name>",
+                "authType": "<ATR auth type, e.g. 'basic'>"
+            },
+            {
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<bulkfhir service name>",
+                "host": "<bulkfhir host>",
+                "port": <bulkfhir port>,
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "/api/<component namespace lowercase>/bulkfhir/export",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<PDex_User credentials name>",
+                "authType": "<bulkfhir auth type, e.g. 'basic'>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<oauthServer>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "PDexMMResourceServer",
+                        "clientType": "resource",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name>",
+                        "clientCredentialsID": "<clientCredentialsID>",
+                        "clientSecret": "<clientSecret>"
+                    }
+                ]
+            }
+        ],
+        "$productionSettingsNote": "interoperability production configuration and settings",
+        "$productionSettingsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_prod",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ECONFIG_config_settings"
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.PDexMM.Local.Production",
+            "items": [
+                {
+                    "$nameNote": "the business host name",
+                    "name": "MemberMatchOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "<match service name>",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "MemberConsentOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "<consent service name>",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "BulkExportOperation",
+                    "settings": [
+                        {
+                            "settingName": "SourceName",
+                            "settingValue": "<bulkfhir service name>",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        },
+        "bulkFhirConfig": {
+            "version": 1,
+            "endpoint_url": "/api/<component namespace lowercase>/bulkfhir/export",
+            "name": "PDex Member Match Bulk FHIR Export",
+            "core_fhir_package": "hl7.fhir.r4.core@4.0.1",
+            "auto_start": true,
+            "fetch_adapter": "HS.HP.PDexMM.FHIR.BulkFHIR.Adapter",
+            "fetch_config": {
+                "client_auth_adapter": "HS.BulkFHIR.ClientAuth.BasicAuth.Adapter",
+                "patient_export": false,
+                "group_export": true,
+                "system_export": false,
+                "match_service_name": "FHIRRequestService",
+                "old_payer_npi": "example.com/oldpayer",
+                "old_payer_display": "InterSystems Customer",
+                "endpoint_url": "<instanceURL>/api/fhir/<component namespace lowercase>",
+                "flush_interval_mins": 60,
+                "worker_jobs": 4,
+                "include_groups": true,
+                "temp_max_file_size": 1000
+            },
+            "auth_adapter": "HS.BulkFHIR.Auth.BasicAuth.Adapter",
+            "auth_config": {},
+            "authorized_users": [
+                "PDex_User"
+            ],
+            "storage_adapter": "HS.BulkFHIR.Storage.File.Adapter",
+            "storage_config": {
+                "file_url": "/api/<component namespace lowercase>/bulkfhir/file",
+                "max_file_size": 1000,
+                "expire_after_mins": 2880
+            },
+            "is_inactive": false
+        }
+    }
+}
