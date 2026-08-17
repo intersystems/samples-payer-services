@@ -1,0 +1,453 @@
+{
+    "$intersystems_payer_services_hp_pdexNote": "remove any sections from this sample that you do not need for your configuration",
+    "intersystems_payer_services_hp_pdex": {
+        "$interopCredentialsNote": "username/password credentials for logging into remote systems with 'basic' auth; can be referenced in the httpServices object",
+        "$interopCredentialsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_creds",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars"
+        ],
+        "interopCredentials": [
+            {
+                "$note": "Credentials for the Interop production to access local BulkFHIR Coordinator endpoints on this instance",
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "PDex_User",
+                "userName": "PDex_User",
+                "password": "<PDex_User username password environment variable>"
+            },
+            {
+                "$note": "Credentials for the Interop production to access UCR endpoints (Edge, ODS, and registry web service)",
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "CredToUCR",
+                "userName": "<Unified Care Record username>",
+                "password": "<UCR username password environment variable>"
+            },
+            {
+                "$note": "Credentials for the Interop production to access UCR endpoints as a provider",
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<ODS credentials for providers>",
+                "userName": "<Unified Care Record Provider username>",
+                "password": "<UCRProvider username password environment variable>"
+            },
+            {
+                "$note": "Credentials for the Interop production to access UCR endpoints as a payer who can access non-sensitive data only",
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<ODS credentials for payers for non-sensitive data>",
+                "userName": "<Unified Care Record NonSensitive Payer username>",
+                "password": "<UCRPayerNotSensitive username password environment variable>"
+            },
+            {
+                "$note": "Credentials for the Interop production to access UCR endpoints as a payer who can access all data",
+                "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
+                "identifier": "<ODS credentials for payers for all data>",
+                "userName": "<Unified Care Record All-data Payer username>",
+                "password": "<UCRPayerSensitive username password environment variable>"
+            }
+        ],
+        "httpServices": [
+            {
+                "$note": "MANDATORY: points to the responder's BulkFHIR export endpoint on this instance",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "bulkfhirexport",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/<component namespace lowercase>/bulkfhir/export",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "PDex_User",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the responder's BulkFHIR file endpoint on this instance",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "bulkfhirexportfile",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/<component namespace lowercase>/bulkfhir/file",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "PDex_User",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the responder's PDex Member Match FHIR endpoint on this instance",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "pdexmm",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/fhir/<pdex member match namespace lowercase>",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "PDex_User",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the BulkFHIR export endpoint used by the PDex Member Match FHIR endpoint on this instance",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "pdexmmbulkfhirexport",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/<pdex member match namespace lowercase>/bulkfhir/export",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "PDex_User",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the PDex Member Match file endpoint on this instance",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "pdexmmbulkfhirexportfile",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/<pdex member match namespace lowercase>/bulkfhir/file",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "PDex_User",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the edge submission endpoint",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "edgesubmit",
+                "host": "<UCR edge host>",
+                "port": "<UCR edge port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/healthshare-rest/hsedge1/fhir-ingestion/$submitBundle",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "CredToUCR",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the edge status endpoint",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "edgestatus",
+                "host": "<UCR edge host>",
+                "port": "<UCR edge port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "api/healthshare-rest/hsedge1/fhir-ingestion/$status",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "CredToUCR",
+                "sourceType": "payer"
+            },
+            {
+                "$note": "MANDATORY: points to the target FHIR endpoint for direct query",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "odsfhir",
+                "host": "<UCR ODS host>",
+                "port": "<UCR ODS port>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<FHIR Server endpoint>",
+                "authType": "basic",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<ODS credentials for providers>",
+                "sourceType": "provider"
+            },
+            {
+                "$note": "MANDATORY: points to the MPI $member-match endpoint",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<match service name>",
+                "host": "<match host>",
+                "port": "<match port>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<match URL>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<credentials name>",
+                "authType": "<match auth type>"
+            },
+            {
+                "$note": "MANDATORY: points to member options $evaluate endpoint",
+                "$nameNote": "can be referenced by an Interoperability setting",
+                "name": "<consent service name>",
+                "host": "<local pdex host>",
+                "port": "<local pdex port>",
+                "$urlNote": "for the bulkfhir http services, the URL must include the instance prefix.",
+                "url": "<consent URL>",
+                "$sslConfigNote": "references sslConfigs object",
+                "sslConfig": "<SSL configuration name>",
+                "$httpCredentialsConfigNote": "references interopCredentials object",
+                "httpCredentialsConfig": "<consent credentials name>",
+                "authType": "<consent auth type>"
+            }
+        ],
+        "$x509CredentialsNote": "X.509 certificate and private key credentials; can be referenced by oAuthServerConfigs clients via x509CredentialAlias for private_key_jwt authentication",
+        "x509Credentials": [
+            {
+                "$note": "X.509 credentials for OAuth2 client JWT Settings",
+                "$aliasNote": "unique alias identifying this X.509 credential; referenced by oAuthServerConfigs clients via x509CredentialAlias",
+                "alias": "<x509 credential alias>",
+                "certificateFilePath": "<path to file containing X.509 certificate>",
+                "privateKeyFilePath": "<path to file containing associated private key>"
+            }
+        ],
+        "$oAuthServerConfigsNote": "settings for remote OAuth server connections; each can contain one or more client configurations",
+        "$oAuthServerConfigsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_oauth",
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_envvars",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ROARS_iam_oauth_client "
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for resource server>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for resource server>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "PDexResourceServer",
+                        "clientCredentialsID": "<credentials ID for resource server>",
+                        "clientSecret": "<client secret for resource server>",
+                        "clientType": "resource",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for resource server>"
+                    }
+                ]
+            },
+            {
+                "oAuthServerEndpoint": "<OAuth endpoint for external payer>",
+                "$oAuthServerSSLConfigNote": "references sslConfigs object",
+                "oAuthServerSSLConfig": "<SSL configuration name for external payer>",
+                "clients": [
+                    {
+                        "$clientNameNote": "can be referenced by an Interoperability setting",
+                        "clientName": "<OAuth client name for external payer>",
+                        "clientCredentialsID": "<OAuth credentials ID for external payer>",
+                        "clientSecret": "<OAuth client secret env var for external payer>",
+                        "clientType": "confidential",
+                        "$sslConfigurationNote": "references sslConfigs object",
+                        "sslConfiguration": "<SSL configuration name for external payer>",
+                        "redirectUrlHost": "<redirection host>",
+                        "redirectUrlPort": "<redirection port>",
+                        "tokenEndpointAuthMethod": "<token endpoint auth method>",
+                        "$x509CredentialAliasNote": "references x509Credentials object; required when tokenEndpointAuthMethod is private_key_jwt",
+                        "x509CredentialAlias": "<x509 credential alias>"
+                    }
+                ]
+            }
+        ],
+        "$productionSettingsNote": "interoperability production configuration and settings",
+        "$productionSettingsDocs": [
+            "https://docs.intersystems.com/hslatest/csp/docbook/DocBook.UI.Page.cls?KEY=HSPSDeploy_prereq_jsonconfig_prod",
+            "https://docs.intersystems.com/irisforhealthlatest/csp/docbook/DocBook.UI.Page.cls?KEY=ECONFIG_config_settings"
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.PDex.Local.Production",
+            "items": [
+                {
+                    "$nameNote": "the business host name",
+                    "name": "FHIRResponderService",
+                    "settings": [
+                        {
+                            "settingName": "BulkFHIRExportServiceName",
+                            "settingValue": "bulkfhirexport",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "BulkFHIRFileServiceName",
+                            "settingValue": "bulkfhirexportfile",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "MemberMatchServiceName",
+                            "settingValue": "pdexmm",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "BulkMemberMatchBFCServiceName",
+                            "settingValue": "pdexmmbulkfhirexport",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "BulkMemberMatchFileServiceName",
+                            "settingValue": "pdexmmbulkfhirexportfile",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "PDexResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "EdgeStatusOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "edgestatus",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "TargetPostOperation",
+                    "settings": [
+                        {
+                            "settingName": "HTTPServiceName",
+                            "settingValue": "edgesubmit",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "ResponderQueryOperation",
+                    "settings": [
+                        {
+                            "settingName": "TargetFHIRServiceName",
+                            "settingValue": "odsfhir",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "MPIMemberMatchServiceName",
+                            "settingValue": "<match service name>",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "MemberOptionsServiceName",
+                            "settingValue": "<consent service name>",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "$nameNote": "the business host name",
+                    "name": "MemberMatchProcess",
+                    "settings": [
+                        {
+                            "settingName": "DefaultNewPayerMemberIdSystem",
+                            "settingValue": "<system URI for new payer member id>",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "DefaultNewPayerName",
+                            "settingValue": "<display name for new payer organization>",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        },
+        "responderConfig": {
+            "version": 1,
+            "endpoint_url": "/api/<component namespace lowercase>/bulkfhir/export",
+            "name": "Bulk Export",
+            "core_fhir_package": "hl7.fhir.r4.core@4.0.1",
+            "auto_start": true,
+            "fetch_adapter": "HS.HP.PDex.BulkFHIR.Export.Adapter",
+            "fetch_config": {
+                "endpoint_url": "<endpoint of ODS on UCR instance>",
+                "client_auth_adapter": "HS.HP.PDex.BulkFHIR.ClientAuth.BasicAuth.Adapter",
+                "client_auth_config": {
+                    "ssl_configuration": "<SSL configuration name>",
+                    "http_credential_id": "CredToUCR"
+                },
+                "patient_export": false,
+                "group_export": true,
+                "system_export": false,
+                "max_req_per_sec": 10,
+                "http_timeout": 180,
+                "worker_jobs": 4,
+                "flush_interval_mins": 60,
+                "temp_max_file_size": 1000,
+                "member_match_service_name": "<match service name>",
+                "group_storage_service_name": "pdexmm",
+                "member_options_service_name": "<consent service name>",
+                "provider_ODS_credentials": "<ODS credentials for providers>",
+                "payer_non_sensitive_ODS_credentials": "<ODS credentials for payers for non-sensitive data>",
+                "payer_all_ODS_credentials": "<ODS credentials for payers for all data>"
+            },
+            "auth_adapter": "HS.BulkFHIR.Auth.BasicAuth.Adapter",
+            "authorized_users": [
+                "PDex_User"
+            ],
+            "auth_config": {},
+            "storage_adapter": "HS.HP.PDex.BulkFHIR.Export.Storage.Adapter",
+            "storage_config": {
+                "file_url": "/api/<component namespace lowercase>/bulkfhir/file",
+                "max_file_size": 1000,
+                "expire_after_mins": 2880
+            },
+            "is_inactive": false
+        },
+        "requesterConfigs": [
+            {
+                "$note": "REPEATABLE: add one entry per payer source; add a matching httpServices entry for each",
+                "version": 1,
+                "endpoint_url": "/api/<component namespace lowercase>/bulkfhir/import/<external payer identifier>",
+                "name": "Bulk Import <external payer identifier>",
+                "core_fhir_package": "hl7.fhir.r4.core@4.0.1",
+                "auto_start": true,
+                "fetch_adapter": "HS.HP.PDex.BulkFHIR.Import.Adapter",
+                "fetch_config": {
+                    "$note": "endpoint_url must point to a live external payer PDex endpoint; applying this config sends an outbound request to it. If the target is not ready, omit both this requesterConfigs entry and its matching httpServices entry.",
+                    "endpoint_url": "<external payer PDex server url>",
+                    "client_auth_adapter": "HS.BulkFHIR.ClientAuth.OAuth.Adapter",
+                    "client_auth_config": {
+                        "client_name": "<OAuth client name for external payer>",
+                        "grant_type": "client_credentials",
+                        "fetch_token_scopes": [
+                            "system/*.rs"
+                        ]
+                    },
+                    "patient_export": true,
+                    "group_export": true,
+                    "system_export": false,
+                    "http_timeout": 180
+                },
+                "auth_adapter": "HS.BulkFHIR.Auth.BasicAuth.Adapter",
+                "authorized_users": [
+                    "PDex_User"
+                ],
+                "auth_config": {},
+                "storage_adapter": "HS.HP.PDex.BulkFHIR.Import.Storage.Adapter",
+                "storage_config": {
+                    "file_url": "/api/<component namespace lowercase>/bulkfhir/import/file",
+                    "fhir_endpoint": "/csp/healthshare/<component namespace lowercase>/fhir/r4",
+                    "expire_after_mins": 1440,
+                    "integrity_check": true
+                },
+                "is_inactive": false
+            }
+        ],
+        "payerRegistryEntries": [
+            {
+                "payerName": "<external payer friendly name>",
+                "sourceSystem": "<external payer source system uri>",
+                "igVersion": "<igversion>",
+                "bulkFHIRConfigName": "Bulk Import <external payer identifier>",
+                "ignoreCapabilityStatementErrors": false
+            }
+        ]
+    }
+}
