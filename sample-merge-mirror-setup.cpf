@@ -1,0 +1,6 @@
+[Actions]
+# Enable the Mirror Service in IRIS
+ModifyService:Name=%Service_Mirror,Enabled=1
+ 
+# Configure the instance for mirroring. The <mirror role> value should be one of the following: primary, backup, or drasync. 
+ConfigMirror:Name=<mirror name>,Member=<mirror role>,Primary=<primary hostname>,ArbiterURL=<arbiter hostname>:<arbiter port>,UseSSL=1,SSLDir=<ssl configuration directory>

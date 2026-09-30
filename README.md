@@ -24,4 +24,4 @@ The Data Exchange solution includes the Payer Data Exchange (PDex), Member Match
 | :---- | :----- | :---- | :------- |
 | 2.0.0 | 3.0.0  | 1.0.0 | 8/2026   |
 
-
+In all cases, IRIS mirroring can be enabled by completing and running the enable-mirroring.cpf merge file located in the top folder of this repo. 
