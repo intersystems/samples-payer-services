@@ -1,0 +1,3 @@
+[Actions]
+# Update module in the component namespace using local tarball
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="update intersystems_payer_services_hp_crd <update-version> -path <path-and-filename-of-module-artifact> -verbose -DNoTransaction=1 -DNoMapping=1 -DIgnoreInstalled=1"

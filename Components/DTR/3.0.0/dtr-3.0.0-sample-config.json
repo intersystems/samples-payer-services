@@ -1,0 +1,81 @@
+{
+    "intersystems_payer_services_hp_dtr": {
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest",
+                "description": "For authenticating with external APIs and services",
+                "privateKeyType": "RSA"
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "DTR|PIFService",
+                "host": "hal9000.bigcorp.com",
+                "port": 4446,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "url": "/umsystem/index.php",
+                "authType": "none"
+            }
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth server URL>",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "clients": [
+                    {
+                        "clientName": "DTRResourceServer",
+                        "clientCredentialsID": "<client credentials ID>",
+                        "clientSecret": "<client secret>",
+                        "clientType": "resource",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.ConfigTest"
+                    }
+                ]
+            }
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.DTR.Local.Production",
+            "items": [
+                {
+                    "name": "dtr-v2.0.1",
+                    "settings": [
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "DTRResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "dtr-v2.1.0",
+                    "settings": [
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "DTRResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "PayerOperation",
+                    "settings": [
+                        {
+                            "settingName": "PIFService",
+                            "settingValue": "DTR|PIFService",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

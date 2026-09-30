@@ -1,0 +1,88 @@
+{
+    "intersystems_payer_services_hp_pas": {
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest",
+                "description": "For authenticating with external APIs and services",
+                "privateKeyType": "RSA"
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "PAS|PIFService",
+                "host": "example.com",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "url": "csp/healthshare/hp-pif/service/pas",
+                "authType": "none"
+            }
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "<OAuth server URL>",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "clients": [
+                    {
+                        "clientName": "PASResourceServer",
+                        "clientCredentialsID": "<client credentials ID>",
+                        "clientSecret": "<client secret>",
+                        "clientType": "resource",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.ConfigTest"
+                    }
+                ]
+            }
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.PAS.Local.Production",
+            "settings": [
+                {
+                    "settingName": "CollectMetrics",
+                    "settingValue": "1",
+                    "target": "Production"
+                }
+            ],
+            "items": [
+                {
+                    "name": "pas-v2.0.1",
+                    "settings": [
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "PASResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "pas-v2.1.0",
+                    "settings": [
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "PASResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "PayerOperation",
+                    "settings": [
+                        {
+                            "settingName": "PIFService",
+                            "settingValue": "PAS|PIFService",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
