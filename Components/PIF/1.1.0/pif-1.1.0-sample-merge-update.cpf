@@ -1,3 +1,10 @@
 [Actions]
+ 
+# Modify PIF LIB Database to read-write
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%ZHSLIB.HealthShareMgr",MethodName="UpdateReadWrite",Arg1="<MODULE-NAMESPACE-UPPERCASE>-LIB",Arg2="0"
+
 # Update module in the component namespace using local tarball
 Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%IPM.Main",MethodName="Shell",Arg1="update intersystems_payer_integration_framework <update-version> -path <path-and-filename-of-module-artifact> -verbose -DNoTransaction=1 -DNoMapping=1 -DIgnoreInstalled=1"
+
+# Modify PIF LIB Database to read-only
+Execute:Namespace="<MODULE-NAMESPACE-UPPERCASE>",ClassName="%ZHSLIB.HealthShareMgr",MethodName="UpdateReadWrite",Arg1="<MODULE-NAMESPACE-UPPERCASE>-LIB",Arg2="1"
