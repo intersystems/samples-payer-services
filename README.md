@@ -15,8 +15,9 @@ The Electronic Prior Authorization (ePA) solution consists of:
 
 | ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage | Released |
 | :---------- | :---- | :---- | :---- |:------ | :---------- | :------- |
-| 1.0         | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      | 6/2025   |
-| 2.0         | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       | 4/2026   |
+| 1.0.0       | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      | 6/2025   |
+| 2.0.0       | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       | 4/2026   |
+| 2.1.0       | 3.0.0 | 3.0.0 | 3.0.0 | 1.1.0  | 1.0.0       | 9/2026   |
 
 The Data Exchange solution includes the Payer Data Exchange (PDex), Member Match (PDexMM) and Attribution (ATR) components.
 

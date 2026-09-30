@@ -1,0 +1,97 @@
+{
+    "intersystems_payer_integration_framework": {
+        "interopCredentials": [
+            {
+                "identifier": "fhirRepo1Creds",
+                "userName": "fhirRepo1Username",
+                "password": "fhirRepo1Password"
+            }
+        ],
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest1",
+                "description": "For communication with FHIR repository 1",
+                "privateKeyType": "RSA"
+            },
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "description": "For communication with FHIR repository 2",
+                "privateKeyType": "RSA"
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "ExternalFHIRRepo",
+                "host": "crd-test.davinci.hl7.org",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest1",
+                "url": "test-ehr/r4",
+                "httpCredentialsConfig": "fhirRepo1Creds",
+                "authType": "basic"
+            },
+            {
+                "name": "FrameworkFHIRRepo",
+                "host": "hal9000.bigcorp.com",
+                "port": 8883,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "url": "api/fhir/hp-fhir",
+                "authType": "oauthUseClient"
+            },
+            {
+                "name": "InterQualDocumentationRequirements",
+                "host": "api.test.auth.optum.com",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "url": "/burden-reduction/questionnaire/$documentation-requirements",
+                "authType": "oauthUseClient"
+            },
+            {
+                "name": "InterQualQuestionnairePackage",
+                "host": "api.test.auth.optum.com",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "url": "/burden-reduction/questionnaire/$questionnaire-package",
+                "authType": "oauthUseClient"
+            },
+            {
+                "name": "InterQualNextQuestion",
+                "host": "api.test.auth.optum.com",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "url": "/burden-reduction/v2/questionnaire/$next-question",
+                "authType": "oauthUseClient"
+            }
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "https://dev-13926970.okta.com/oauth2/auskb8z8bmtLfjE4X5d7",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "clients": [
+                    {
+                        "clientName": "FrameworkFHIRRepoClient",
+                        "clientCredentialsID": "0oay234e7tf6lYpgl697",
+                        "clientSecret": "kvwYrkY_rKyOlRVqoFav8iMCkX39bAMhxJ_W09q5CEuyZAI24lrwBnu8Xs4w8H1v",
+                        "clientType": "confidential",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.ConfigTest2",
+                        "redirectUrlHost": "localhost"
+                    }
+                ]
+            },
+            {
+                "oAuthServerEndpoint": "https://idx-stage.linkhealth.com/auth/realms/developer-platform",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.ConfigTest2",
+                "clients": [
+                    {
+                        "clientName": "InterQualOAuthClient",
+                        "clientCredentialsID": "InterSystems-Discovery-Payer-Test",
+                        "clientSecret": "9fn5DWnBZBS5jOuj7LJc8HZaCsz0iJ8u",
+                        "clientType": "confidential",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.ConfigTest2",
+                        "redirectUrlHost": "localhost",
+                        "defaultScope": "UUID_Scraper broker-read-token idp email profile"
+                    }
+                ]
+            }
+        ]
+    }
+}

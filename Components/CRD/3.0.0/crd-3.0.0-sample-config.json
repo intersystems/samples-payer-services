@@ -1,0 +1,109 @@
+{
+    "intersystems_payer_services_hp_crd": {
+        "sslConfigs": [
+            {
+                "name": "ISC.FeatureTracker.SSL.ConfigTest",
+                "description": "For authenticating with external APIs and services",
+                "privateKeyType": "RSA"
+            }
+        ],
+        "httpServices": [
+            {
+                "name": "CRD|PIFService",
+                "host": "crd.davinci.hl7.org",
+                "port": 443,
+                "sslConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "url": "r4",
+                "authType": "none"
+            }
+        ],
+        "oAuthServerConfigs": [
+            {
+                "oAuthServerEndpoint": "https://dev-13926970.okta.com/oauth2/auskb8z8bmtLfjE4X5d7",
+                "oAuthServerSSLConfig": "ISC.FeatureTracker.SSL.ConfigTest",
+                "clients": [
+                    {
+                        "clientName": "CRDResourceServer",
+                        "clientCredentialsID": "0oai9fnhsvMOI0PU75d7",
+                        "clientSecret": "hufG2OJLelA3BHp8mYe8XDB9EHix9VXOMpsaI6oHlmlGspm3oUv2cjlkZXmU5ESO",
+                        "clientType": "resource",
+                        "sslConfiguration": "ISC.FeatureTracker.SSL.ConfigTest"
+                    }
+                ]
+            }
+        ],
+        "productionSettings": {
+            "productionName": "HS.HP.CRD.Local.Production",
+            "settings": [
+                {
+                    "settingName": "CollectMetrics",
+                    "settingValue": "1",
+                    "target": "Production"
+                },
+                {
+                    "settingName": "PayerIdentifierSystem",
+                    "settingValue": "http://example.org/NamingSystem/payer-identifiers",
+                    "target": "Production"
+                },
+                {
+                    "settingName": "PayerIdentifierValue",
+                    "settingValue": "12345",
+                    "target": "Production"
+                }
+            ],
+            "items": [
+                {
+                    "name": "crd-v2.0.1",
+                    "settings": [
+                        {
+                            "settingName": "SSLConfig",
+                            "settingValue": "ISC.FeatureTracker.SSL.ConfigTest",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "CRDResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                },
+                {
+                    "name": "crd-v2.1.0",
+                    "settings": [
+                        {
+                            "settingName": "SSLConfig",
+                            "settingValue": "ISC.FeatureTracker.SSL.ConfigTest",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "OAuthClientName",
+                            "settingValue": "CRDResourceServer",
+                            "target": "Host"
+                        },
+                        {
+                            "settingName": "SMARTCapabilities",
+                            "settingValue": "client-confidential-asymmetric",
+                            "target": "Host"
+                        }
+                    ]
+                }
+            ]
+        },
+        "allowLists": {
+            "issuer": [
+                "https://dev-95487931.okta.com/oauth2/auskrlpgykLL9dBt45d7"
+            ],
+            "jku": [
+                "https://dev-95487931.okta.com/oauth2/auskrlpgykLL9dBt45d7/v1/keys"
+            ],
+            "origin": [
+                "https://provider-app.example.com"
+            ]
+        }
+    }
+}
