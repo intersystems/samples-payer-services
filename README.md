@@ -13,16 +13,16 @@ The Electronic Prior Authorization (ePA) solution consists of:
 - Payer Integration Framework (PIF)
 - FHIR Storage Manager (FHIRStorage)
 
-| ePA version | CRD   | DTR   | PAS   | PIF    | FHIRStorage | Released |
-| :---------- | :---- | :---- | :---- |:------ | :---------- | :------- |
-| 1.0.0       | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      | 6/2025   |
-| 2.0.0       | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       | 4/2026   |
-| 2.1.0       | 3.0.0 | 3.0.0 | 3.0.0 | 1.1.0  | 1.0.0       | 9/2026   |
+|Released | CRD   | DTR   | PAS   | PIF    | FHIRStorage |
+| :------ | :---- | :---- | :---- |:------ | :---------- |
+| 6/2025  | 1.0.0 | 1.1.0 | 1.1.0 | (none) | (none)      |
+| 4/2026  | 2.1.0 | 2.0.0 | 2.0.0 | 1.0.0  | 1.0.0       |
+| 9/2026  | 3.0.0 | 3.0.0 | 3.0.0 | 1.1.0  | 1.0.0       |
 
 The Data Exchange solution includes the Payer Data Exchange (PDex), Member Match (PDexMM) and Attribution (ATR) components.
 
-| PDex  | PDexMM | ATR   | Released |
-| :---- | :----- | :---- | :------- |
-| 2.0.0 | 3.0.0  | 1.0.0 | 8/2026   |
+| Released | PDex  | PDexMM | ATR   |
+| :------- | :---- | :----- | :---- |
+| 8/2026   | 2.0.0 | 3.0.0  | 1.0.0 |
 
 In all cases, IRIS mirroring can be enabled by completing and running the enable-mirroring.cpf merge file located in the top folder of this repo. 
