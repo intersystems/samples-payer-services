@@ -16,14 +16,14 @@
             {
                 "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
                 "identifier": "empiCreds",
-                "userName": "<username>",
-                "password": "<password>"
+                "userName": "<empiCreds credentials user>",
+                "password": "<empiCreds credentials pwd>"
             },
             {
                 "$identifierNote": "can be referenced by HTTP services objects in their 'HTTPCredentialsConfig' setting",
                 "identifier": "PDex_User",
                 "userName": "PDex_User",
-                "password": "<password>"
+                "password": "<PDex_User credentials pwd>"
             }
         ],
         "$sslConfigsNote": "SSL configurations for network connections",
@@ -54,7 +54,7 @@
                 "$sslConfigNote": "references sslConfigs object",
                 "sslConfig": "<SSL configuration name>",
                 "$httpCredentialsConfigNote": "references interopCredentials object",
-                "httpCredentialsConfig": "<sys credentials name>",
+                "httpCredentialsConfig": "<empiCreds credentials name>",
                 "authType": "<match auth type, e.g. 'basic'>"
             },
             {
@@ -104,7 +104,7 @@
                 "$sslConfigNote": "references sslConfigs object",
                 "sslConfig": "<SSL configuration name>",
                 "$httpCredentialsConfigNote": "references interopCredentials object",
-                "httpCredentialsConfig": "<sys credentials name>",
+                "httpCredentialsConfig": "<empiCreds credentials name>",
                 "authType": "<ATR auth type, e.g. 'basic'>"
             },
             {

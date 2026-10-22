@@ -3,8 +3,8 @@
         "interopCredentials": [
             {
                 "identifier": "empiCreds",
-                "userName": "<username>",
-                "password": "<password>"
+                "userName": "<credentials user>",
+                "password": "<credentials pwd>"
             }
         ],
         "sslConfigs": [
